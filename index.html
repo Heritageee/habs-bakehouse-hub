@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hab's Bakehouse Hub | Bake to Order, Abuja</title>
+<meta name="description" content="Rich fruit cakes, vanilla cakes and banana bread, baked to order in Apo, Abuja. Order on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#5E1424;--deep:#3F0D18;--cream:#F6EBD9;--paper:#FFFFFF;--line:#E4D3B8;--ink:#2A0F15;
+--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Figtree',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.55;padding-bottom:84px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--wine);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header{background:var(--wine);color:var(--cream);padding:56px 0 48px;text-align:center}
+header h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.2rem,8vw,4rem);line-height:1.05;letter-spacing:-.01em}
+header p.tag{font-family:var(--serif);font-style:italic;font-size:1.25rem;margin-top:14px;opacity:.92}
+header p.where{margin-top:18px;font-size:.95rem;opacity:.8}
+.btn{display:inline-block;border:0;border-radius:999px;padding:13px 26px;font:700 1rem var(--sans);cursor:pointer;text-decoration:none}
+.btn-cream{background:var(--cream);color:var(--wine);margin-top:26px}
+.btn-wine{background:var(--wine);color:var(--cream)}
+.btn:hover{filter:brightness(1.08)}
+section{padding:44px 0}
+h2{font-family:var(--serif);font-size:1.9rem;color:var(--wine);margin-bottom:6px}
+.sub{color:#6b4a4f;margin-bottom:22px}
+.cat{margin-top:30px}
+.cat h3{font-family:var(--serif);font-size:1.4rem;color:var(--wine);padding-bottom:6px;border-bottom:2px solid var(--wine)}
+.cat .note{font-style:italic;margin-top:8px;color:#6b4a4f}
+.item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item .info{flex:1}
+.item .name{font-weight:700}
+.item .size{font-size:.88rem;color:#6b4a4f}
+.item .price{font-family:var(--serif);font-weight:700;color:var(--wine);white-space:nowrap}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--wine);background:var(--paper);color:var(--wine);font-size:1.2rem;line-height:1;cursor:pointer}
+.qty button:hover{background:var(--wine);color:var(--cream)}
+.qty output{min-width:22px;text-align:center;font-weight:700}
+.order{background:var(--paper)}
+.card{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+.card h3{font-family:var(--serif);color:var(--wine);margin-bottom:8px}
+#summary li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;list-style:none}
+#summary{padding:0}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;border-top:2px solid var(--wine);margin-top:8px;padding-top:10px}
+.muted{color:#6b4a4f;font-size:.9rem}
+label{display:block;font-weight:700;margin:14px 0 5px;font-size:.95rem}
+input,select,textarea{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font:1rem var(--sans);background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{border-color:var(--wine)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.bank dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px}
+.bank dt{color:#6b4a4f}
+.bank dd{font-weight:700}
+.copy{margin-top:12px;background:transparent;border:1.5px solid var(--wine);color:var(--wine);padding:8px 16px;font-size:.9rem}
+.steps{padding-left:20px}
+.steps li{margin:4px 0}
+#err{color:#a11;font-weight:700;margin-top:12px;min-height:1.2em}
+.send{width:100%;margin-top:10px;font-size:1.05rem;padding:16px}
+footer{background:var(--deep);color:var(--cream);text-align:center;padding:36px 20px}
+footer .brand{font-family:var(--serif);font-size:1.3rem}
+footer p{margin-top:6px;opacity:.85}
+footer a{margin:0 10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--wine);color:var(--cream);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:5;transform:translateY(100%);transition:transform .25s}
+.bar.show{transform:none}
+.bar .btn{background:var(--cream);color:var(--wine);padding:10px 20px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Hab’s Bakehouse Hub</h1>
+    <p class="tag">Crafted with love, baked to perfection</p>
+    <p class="where">Bake to order · Apo, Abuja</p>
+    <a class="btn btn-cream" href="#menu">See the menu</a>
+  </div>
+</header>
+
+<main>
+<section id="menu">
+  <div class="wrap">
+    <h2>Our cake &amp; loaf menu</h2>
+    <p class="sub">Deliciously baked, beautifully packaged, and made with love. Tap + to add what you want.</p>
+    <div id="menuList"></div>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="wrap">
+    <h2>Place your order</h2>
+    <p class="sub">Fill this in, pay by bank transfer, then send your order and proof of payment to us on WhatsApp.</p>
+
+    <div class="card">
+      <h3>Your order</h3>
+      <ul id="summary"></ul>
+      <div class="total"><span>Items total</span><span id="total">₦0</span></div>
+      <p class="muted" id="deliveryNote">Delivery fee, if any, is confirmed with you on WhatsApp.</p>
+    </div>
+
+    <div class="row">
+      <div><label for="name">Your name</label><input id="name" autocomplete="name"></div>
+      <div><label for="phone">Phone number</label><input id="phone" type="tel" autocomplete="tel"></div>
+    </div>
+    <label for="email">Email address</label><input id="email" type="email" autocomplete="email">
+    <div class="row">
+      <div><label for="date">Date you need it</label><input id="date" type="date"></div>
+      <div><label for="method">Pickup or delivery</label>
+        <select id="method"><option>Pickup</option><option>Delivery</option></select></div>
+    </div>
+    <div id="addrBox" hidden><label for="address">Delivery address</label><input id="address" autocomplete="street-address"></div>
+    <label for="notes">Notes (messages, flavours, special requests)</label>
+    <textarea id="notes" rows="3"></textarea>
+
+    <div class="card bank">
+      <h3>Pay by bank transfer</h3>
+      <dl>
+        <dt>Bank</dt><dd>UBA</dd>
+        <dt>Account number</dt><dd id="acct">2181400844</dd>
+        <dt>Account name</dt><dd>Afolabi Heritage</dd>
+      </dl>
+      <button type="button" class="btn copy" id="copyBtn">Copy account number</button>
+    </div>
+
+    <div class="card">
+      <h3>How it works</h3>
+      <ol class="steps">
+        <li>Choose your items and fill in your details.</li>
+        <li>Transfer the total to the account above.</li>
+        <li>Tap the button below. Your order opens in WhatsApp.</li>
+        <li>Send it, along with a screenshot of your payment.</li>
+        <li>We confirm your order and payment with you.</li>
+      </ol>
+    </div>
+
+    <p id="err" role="alert"></p>
+    <button type="button" class="btn btn-wine send" id="send">Send my order on WhatsApp</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p class="brand">Hab’s Bakehouse Hub</p>
+  <p>Every bite, a little happiness.</p>
+  <p>Apo, Abuja · <a href="https://wa.me/2348162387621">08162387621</a></p>
+  <p><a href="https://instagram.com/habs_bakes" target="_blank" rel="noopener">Instagram: habs_bakes</a>
+     <a href="https://www.tiktok.com/@habs.bakes" target="_blank" rel="noopener">TikTok: habs.bakes</a></p>
+</footer>
+
+<div class="bar" id="bar" aria-live="polite">
+  <span><strong id="barCount">0 items</strong> · <span id="barTotal">₦0</span></span>
+  <a class="btn" href="#order">Go to checkout</a>
+</div>
+
+<script>
+var WHATSAPP = "2348162387621";
+var MENU = [
+  {cat:"Rich fruit cakes", items:[
+    {id:"f1",name:"Rich Fruit Cake Loaf",size:"130mm × 100mm",price:15000},
+    {id:"f2",name:"Foil-Pan Fruit Cake",price:5000},
+    {id:"f3",name:"Box of 12 Fruit Cake Cupcakes",price:12500}]},
+  {cat:"Vanilla cakes", items:[
+    {id:"v1",name:"Rich Vanilla Cake Loaf",price:12000},
+    {id:"v2",name:"Foil-Pan Vanilla Cake",price:4500},
+    {id:"v3",name:"Box of 12 Vanilla Cupcakes",price:11000},
+    {id:"v4",name:"Box of 6 Vanilla Cupcakes",price:7000}]},
+  {cat:"Banana bread", note:"Made with chocolate chips and a delicious banana topping.", items:[
+    {id:"b1",name:"Medium Foil-Pan Banana Bread",size:"205mm × 110mm rectangular loaf",price:6500},
+    {id:"b2",name:"Large Loaf-Pan Banana Bread",price:13500}]}
+];
+var qty = {}, byId = {};
+var naira = function(n){ return "₦" + n.toLocaleString("en-NG"); };
+var $ = function(id){ return document.getElementById(id); };
+
+var html = "";
+MENU.forEach(function(c){
+  html += '<div class="cat"><h3>' + c.cat + '</h3>' + (c.note ? '<p class="note">' + c.note + '</p>' : '');
+  c.items.forEach(function(i){
+    byId[i.id] = i; qty[i.id] = 0;
+    html += '<div class="item"><div class="info"><div class="name">' + i.name + '</div>' +
+      (i.size ? '<div class="size">' + i.size + '</div>' : '') + '</div>' +
+      '<div class="price">' + naira(i.price) + '</div>' +
+      '<div class="qty"><button type="button" data-id="' + i.id + '" data-d="-1" aria-label="Remove one ' + i.name + '">−</button>' +
+      '<output id="q-' + i.id + '">0</output>' +
+      '<button type="button" data-id="' + i.id + '" data-d="1" aria-label="Add one ' + i.name + '">+</button></div></div>';
+  });
+  html += '</div>';
+});
+$("menuList").innerHTML = html;
+
+$("menuList").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  var id = b.dataset.id;
+  qty[id] = Math.max(0, qty[id] + Number(b.dataset.d));
+  render();
+});
+
+function render(){
+  var total = 0, count = 0, rows = "";
+  Object.keys(qty).forEach(function(id){
+    $("q-" + id).textContent = qty[id];
+    if(qty[id] > 0){
+      var line = qty[id] * byId[id].price; total += line; count += qty[id];
+      rows += "<li><span>" + qty[id] + " × " + byId[id].name + "</span><span>" + naira(line) + "</span></li>";
+    }
+  });
+  $("summary").innerHTML = rows || '<li class="muted">Nothing added yet. Pick items from the menu above.</li>';
+  $("total").textContent = naira(total);
+  $("barCount").textContent = count + (count === 1 ? " item" : " items");
+  $("barTotal").textContent = naira(total);
+  $("bar").classList.toggle("show", count > 0);
+  return {total: total, count: count};
+}
+
+$("method").addEventListener("change", function(){
+  $("addrBox").hidden = this.value !== "Delivery";
+});
+
+var d = new Date(); d.setDate(d.getDate() + 1);
+$("date").min = d.toISOString().slice(0,10);
+
+$("copyBtn").addEventListener("click", function(){
+  var btn = this;
+  try {
+    navigator.clipboard.writeText($("acct").textContent).then(function(){
+      btn.textContent = "Copied"; setTimeout(function(){ btn.textContent = "Copy account number"; }, 2000);
+    });
+  } catch(e) { btn.textContent = "Long-press the number to copy"; }
+});
+
+$("send").addEventListener("click", function(){
+  var s = render(), err = $("err");
+  var name = $("name").value.trim(), phone = $("phone").value.trim(), email = $("email").value.trim();
+  var date = $("date").value, method = $("method").value, addr = $("address").value.trim();
+  if(!s.count){ err.textContent = "Add at least one item from the menu."; return; }
+  if(!name || !phone){ err.textContent = "Enter your name and phone number."; return; }
+  if(!date){ err.textContent = "Choose the date you need your order."; return; }
+  if(method === "Delivery" && !addr){ err.textContent = "Enter your delivery address."; return; }
+  err.textContent = "";
+  var lines = Object.keys(qty).filter(function(id){ return qty[id] > 0; }).map(function(id){
+    return "• " + qty[id] + " × " + byId[id].name + " (" + naira(qty[id] * byId[id].price) + ")";
+  });
+  var msg = "Hello Hab's Bakehouse Hub, I'd like to place an order.\n\n" +
+    "*Order*\n" + lines.join("\n") + "\n\n*Items total:* " + naira(s.total) + "\n\n" +
+    "*Name:* " + name + "\n*Phone:* " + phone + (email ? "\n*Email:* " + email : "") +
+    "\n*Date needed:* " + date + "\n*" + method + "*" + (method === "Delivery" ? "\n*Address:* " + addr : "") +
+    ($("notes").value.trim() ? "\n*Notes:* " + $("notes").value.trim() : "") +
+    "\n\nI have paid by transfer to UBA 2181400844 and will send my proof of payment here.";
+  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
+});
+
+render();
+</script>
+</body>
+</html>
